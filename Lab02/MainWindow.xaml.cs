@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,12 +21,32 @@ namespace Lab02
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private Style el_template;
         private Style l_template;
         private Graph uses_graph;
         private Random random = new Random();
+        private Ellipse curOverEllipse
+        {
+            get
+            {
+                Ellipse ellipse = null;
+                foreach (var child in cl_VasaField.Children)
+                {
+                    if (child is Ellipse && ((Ellipse)child).IsMouseOver)
+                    {
+                        ellipse = (Ellipse)child;
+                        break;
+                    }
+                }
+                return ellipse;
+            }
+        }
+        private Ellipse previouslySelectedEllipse;
+
+        private bool isDraggingEnabled;
+        public bool IsDraggingEnabled { get { return isDraggingEnabled; } set { isDraggingEnabled = value; NotifyPropertyChanged(); } }
 
         public MainWindow()
         {
@@ -33,7 +55,9 @@ namespace Lab02
             l_template = FindResource("Line_Style") as Style;
             UsesGraph();
             RedrawUsesGraph(uses_graph);
-            
+            previouslySelectedEllipse = null;
+            IsDraggingEnabled = true;
+            this.DataContext = this;
         }
 
         void UsesGraph()
@@ -73,7 +97,28 @@ namespace Lab02
             Ellipse el = new Ellipse();
             el.DataContext = v;
             el.Style = el_template;
+            el.MouseDown += el_MouseDown;
             cl_VasaField.Children.Add(el);
+        }
+
+        private void el_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Ellipse el = (Ellipse)sender;
+            if (el != null)
+                if (previouslySelectedEllipse == null)
+                {
+                    previouslySelectedEllipse = el;
+                }
+                else
+                {
+                    Vertex v1 = previouslySelectedEllipse.DataContext as Vertex;
+                    Vertex v2 = el.DataContext as Vertex;
+                    if (!uses_graph.IsLinked(v1, v2))
+                    {
+                        uses_graph.AddLink(v1, v2);
+                        previouslySelectedEllipse = null;
+                    }
+                }
         }
 
         void AddLinkToCanvas(Vertex v1, Vertex v2)
@@ -87,8 +132,41 @@ namespace Lab02
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Space)
-                RedrawUsesGraph(uses_graph);
+            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
+                IsDraggingEnabled = false;
         }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
+            {
+                IsDraggingEnabled = true;
+                previouslySelectedEllipse = null;
+            }
+        }
+
+        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (IsDraggingEnabled)
+            {
+                Ellipse ellipse = curOverEllipse;
+                if (ellipse == null)
+                    uses_graph.AddVertex(Mouse.GetPosition(cl_VasaField));
+                else
+                    uses_graph.DeleteVertex(ellipse.DataContext as Vertex);
+            }
+        }
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
+
     }
 }

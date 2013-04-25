@@ -5,7 +5,9 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         Title="MainWindow" Height="350" Width="525"
         xmlns:b="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
-        KeyDown="Window_KeyDown">
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp"
+        MouseDoubleClick="Window_MouseDoubleClick">
     <Window.Resources>
         <conv:TopLeftToCenterConverter x:Key="TopLeftToCenterConverter"/>
         <system:Double x:Key="EllipseSize" >20</system:Double>
@@ -19,7 +21,8 @@
             <Setter Property="Fill" Value="Red"/>
             <Setter Property="Stroke" Value="Black"/>
             <Setter Property="StrokeThickness" Value="1"/>
-            <Setter Property="b:DragBehaviour.IsDragEnabled" Value="True"/>
+            <Setter Property="b:DragBehaviour.IsDragEnabled" 
+                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=IsDraggingEnabled}"/>
             <Setter Property="Panel.ZIndex" Value="{StaticResource MiddleZIndex}"/>
             <Setter Property="b:DragBehaviour.X" 
                     Value="{Binding RelativeSource={RelativeSource self},
@@ -68,7 +71,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Canvas Grid.Row="0" Name="cl_VasaField"/>
+        <Canvas Grid.Row="0" Name="cl_VasaField"
+                Background="White">
+        </Canvas>
     </Grid>
     
 </Window>

@@ -67,6 +67,11 @@ namespace Lab02
             OnGraphChanged();
         }
 
+        public bool IsLinked(Vertex v1, Vertex v2)
+        {
+            return Links.Contains(new Tuple<Vertex,Vertex>(v1,v2));
+        }
+
         public Vertex AddLinkedVertex(List<Vertex> adjacent)
         {
             adjacencyList.Add(new List<Vertex>(adjacent));
