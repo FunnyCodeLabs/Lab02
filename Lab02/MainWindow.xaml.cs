@@ -116,11 +116,11 @@ namespace Lab02
                 {
                     Vertex v1 = previouslySelectedEllipse.DataContext as Vertex;
                     Vertex v2 = el.DataContext as Vertex;
+                    previouslySelectedEllipse = null;
                     if (!uses_graph.IsLinked(v1, v2))
-                    {
                         uses_graph.AddLink(v1, v2);
-                        previouslySelectedEllipse = null;
-                    }
+                    else
+                        uses_graph.DeleteLink(v1, v2);
                 }
         }
 
