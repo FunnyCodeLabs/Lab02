@@ -171,5 +171,10 @@ namespace Lab02
         }
         #endregion
 
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

@@ -7,7 +7,7 @@
         xmlns:b="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
         KeyDown="Window_KeyDown"
         KeyUp="Window_KeyUp"
-        MouseDoubleClick="Window_MouseDoubleClick">
+        MouseDoubleClick="Window_MouseDoubleClick" Icon="Icons/computer.png">
     <Window.Resources>
         <conv:TopLeftToCenterConverter x:Key="TopLeftToCenterConverter"/>
         <system:Double x:Key="EllipseSize" >20</system:Double>
@@ -51,6 +51,7 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Panel.ZIndex" Value="{StaticResource TopZIndex}"/>
+                    <Setter Property="StrokeThickness" Value="2"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="False">
                     <Setter Property="Panel.ZIndex" Value="{StaticResource MiddleZIndex}"/>
@@ -66,12 +67,48 @@
             <Setter Property="Y2" Value="{Binding Item2.Y}"/>
             <Setter Property="Panel.ZIndex" Value="{StaticResource LowZIndex}"/>
         </Style>
+        
+        <Style x:Key="ImageForButtonStyle" TargetType="Image">
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="24"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Canvas Grid.Row="0" Name="cl_VasaField"
+        <ToolBar Grid.Row="0">
+            <Button Margin="0 0 4 0" ToolTip="New graph">
+                <Image Source="Icons/add.png" Style="{StaticResource ImageForButtonStyle}"/>
+            </Button>
+            
+            <Button Margin="0 0 4 0" ToolTip="Open">
+                <Image Source="Icons/open.png" Style="{StaticResource ImageForButtonStyle}"/>
+            </Button>
+            
+            <Button Margin="0 0 4 0" ToolTip="Save">
+                <Image Source="Icons/save.png" Style="{StaticResource ImageForButtonStyle}"/>
+            </Button>
+            
+            <Separator/>
+
+            <Button Margin="4 0 4 0" ToolTip="Take a snapshot">
+                <Image Source="Icons/snapshot.png" Style="{StaticResource ImageForButtonStyle}"/>
+            </Button>
+
+            <Button Margin="0 0 4 0" ToolTip="Information">
+                <Image Source="Icons/info.png" Style="{StaticResource ImageForButtonStyle}"/>
+            </Button>
+            
+            <Separator/>
+
+            <Button Margin="4 0 4 0" ToolTip="Settings" Click="Settings_Click">
+                <Image Source="Icons/settings.png" Style="{StaticResource ImageForButtonStyle}"/>
+            </Button>
+
+        </ToolBar>
+        <Canvas Grid.Row="1" Name="cl_VasaField"
                 Background="White">
         </Canvas>
     </Grid>
