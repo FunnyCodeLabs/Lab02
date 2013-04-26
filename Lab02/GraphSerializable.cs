@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Lab02
 {
     [Serializable]
-    class GraphSerializable
+    public class GraphSerializable
     {
         public List<List<Vertex>> adjacencyList;
         public int n;

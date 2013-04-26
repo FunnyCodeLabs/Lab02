@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace Lab02
 {
-    class Graph
+    public class Graph
     {
         private List<List<Vertex>> adjacencyList;
 
@@ -39,15 +39,24 @@ namespace Lab02
             }
         }
 
+        public bool ChangesSaved
+        {
+            get;
+            set;
+        }
+
         public Graph()
         {
             adjacencyList = new List<List<Vertex>>();
             n = 0;
+            ChangesSaved = true;
         }
 
         public Graph(GraphSerializable gr)
         {
             LoadSerializableClone(gr);
+
+            ChangesSaved = true;
         }
 
         private List<Vertex> GetAdjacent(Vertex v)
@@ -68,8 +77,15 @@ namespace Lab02
 
         public void AddLink(Vertex v1, Vertex v2)
         {
-            GetAdjacent(v1).Add(v2);
-            GetAdjacent(v2).Add(v1);
+            List<Vertex> v1Adjacent = GetAdjacent(v1);
+            List<Vertex> v2Adjacent = GetAdjacent(v2);
+
+            if (v1Adjacent == null || v2Adjacent == null)
+                return;
+
+            v1Adjacent.Add(v2);
+            v2Adjacent.Add(v1);
+
             OnGraphChanged();
         }
 
@@ -113,19 +129,21 @@ namespace Lab02
 
         private void OnGraphChanged()
         {
+            ChangesSaved = false;
+
             if (GraphChanged != null)
                 GraphChanged(this);
+        }
+
+        private void LoadSerializableClone(GraphSerializable gr)
+        {
+            adjacencyList = gr.adjacencyList;
+            n = gr.n;
         }
 
         public GraphSerializable GetSerializableClone()
         {
             return new GraphSerializable() { adjacencyList = this.adjacencyList, n = this.n};
-        }
-
-        public void LoadSerializableClone(GraphSerializable gr)
-        {
-            adjacencyList = gr.adjacencyList;
-            n = gr.n;
         }
     }
 }

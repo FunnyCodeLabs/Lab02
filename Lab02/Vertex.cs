@@ -8,7 +8,7 @@ using System.Windows;
 namespace Lab02
 {
     [Serializable]
-    class Vertex
+    public class Vertex
     {
         public bool HasCoords { get; set; }
         private int x;

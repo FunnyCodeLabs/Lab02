@@ -6,17 +6,23 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using Microsoft.Win32;
+using System.Windows;
 
 namespace Lab02
 {
-    class GraphHelper
+    public class GraphHelper
     {
+        #region Constants
+            private const string DEFAULT_GRAPH_FILE_EXTENSION = "Graph files (*.gr)|*.gr";
+        #endregion
+
         public static void SerializeGraph(Graph graph, string path_to_file)
         {
-            using (Stream stream = File.Open(path_to_file, FileMode.Create))
+            using (Stream stream = File.Open(path_to_file, FileMode.OpenOrCreate))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, graph);
+                formatter.Serialize(stream, graph.GetSerializableClone());
             }
         }
         public static Graph DeSerializeGraph(string path_to_file)
@@ -27,6 +33,52 @@ namespace Lab02
                 GraphSerializable gr = (GraphSerializable)formatter.Deserialize(stream);
                 return new Graph(gr);
             }
+        }
+
+        public static Graph OpenGraphFromFile(Window owner)
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Multiselect = false;
+            openDialog.Filter = DEFAULT_GRAPH_FILE_EXTENSION;
+            openDialog.Title = "Open existing graph";
+
+            var result = openDialog.ShowDialog(owner);
+            if (result.Value)
+            {
+                string fileName = openDialog.FileName;
+
+                return DeSerializeGraph(fileName);
+            }
+
+            return null;
+        }
+
+        public static void SaveGraphToFile(Window owner, Graph graph)
+        {
+            SaveFileDialog saveDialog = new SaveFileDialog();
+
+            saveDialog.OverwritePrompt = true;
+            saveDialog.DefaultExt = DEFAULT_GRAPH_FILE_EXTENSION;
+            saveDialog.AddExtension = true;
+            saveDialog.CheckPathExists = true;
+            saveDialog.CreatePrompt = true;
+            saveDialog.Filter = DEFAULT_GRAPH_FILE_EXTENSION;
+            saveDialog.Title = "Save graph";
+
+            var result = saveDialog.ShowDialog();
+            if (result.Value)
+            {
+                SerializeGraph(graph, saveDialog.FileName);
+                graph.ChangesSaved = true;
+            }
+        }
+
+        public static MessageBoxResult DoYouWantToSaveQuestion(Window owner)
+        {
+            var result = MessageBox.Show(owner, "Do you want to save changes?", "Save graph", 
+                                         MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+            return result;
         }
     }
 }

@@ -79,32 +79,26 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0">
-            <Button Margin="0 0 4 0" ToolTip="New graph">
+            <Button Margin="0 0 4 0" ToolTip="New graph" Click="NewGraph_Click">
                 <Image Source="Icons/add.png" Style="{StaticResource ImageForButtonStyle}"/>
             </Button>
             
-            <Button Margin="0 0 4 0" ToolTip="Open">
+            <Button Margin="0 0 4 0" ToolTip="Open" Click="OpenFromFile_Click">
                 <Image Source="Icons/open.png" Style="{StaticResource ImageForButtonStyle}"/>
             </Button>
             
-            <Button Margin="0 0 4 0" ToolTip="Save">
+            <Button Margin="0 0 4 0" ToolTip="Save" Click="SaveToFile_Click">
                 <Image Source="Icons/save.png" Style="{StaticResource ImageForButtonStyle}"/>
-            </Button>
-            
-            <Separator/>
-
-            <Button Margin="4 0 4 0" ToolTip="Take a snapshot">
-                <Image Source="Icons/snapshot.png" Style="{StaticResource ImageForButtonStyle}"/>
-            </Button>
-
-            <Button Margin="0 0 4 0" ToolTip="Information">
-                <Image Source="Icons/info.png" Style="{StaticResource ImageForButtonStyle}"/>
             </Button>
             
             <Separator/>
 
             <Button Margin="4 0 4 0" ToolTip="Settings" Click="Settings_Click">
                 <Image Source="Icons/settings.png" Style="{StaticResource ImageForButtonStyle}"/>
+            </Button>
+            
+            <Button Margin="0 0 4 0" ToolTip="Information" Click="GetInfo_Click">
+                <Image Source="Icons/info.png" Style="{StaticResource ImageForButtonStyle}"/>
             </Button>
 
         </ToolBar>
