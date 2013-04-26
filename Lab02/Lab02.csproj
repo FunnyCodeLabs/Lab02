@@ -61,6 +61,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Graph.cs" />
+    <Compile Include="GraphHelper.cs" />
+    <Compile Include="GraphSerializable.cs" />
     <Compile Include="TopLeftToCenterConverter.cs" />
     <Compile Include="Vertex.cs" />
     <Page Include="MainWindow.xaml">

@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace Lab02
 {
+    [Serializable]
     class Vertex
     {
         public bool HasCoords { get; set; }
@@ -23,6 +24,7 @@ namespace Lab02
             } 
             set { x = value; HasCoords = true; } 
         }
+
         public int Y 
         {
             get 

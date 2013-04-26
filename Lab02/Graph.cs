@@ -12,6 +12,7 @@ namespace Lab02
     class Graph
     {
         private List<List<Vertex>> adjacencyList;
+
         int n;
 
         public List<Vertex> Vertexes
@@ -42,6 +43,11 @@ namespace Lab02
         {
             adjacencyList = new List<List<Vertex>>();
             n = 0;
+        }
+
+        public Graph(GraphSerializable gr)
+        {
+            LoadSerializableClone(gr);
         }
 
         private List<Vertex> GetAdjacent(Vertex v)
@@ -109,6 +115,17 @@ namespace Lab02
         {
             if (GraphChanged != null)
                 GraphChanged(this);
+        }
+
+        public GraphSerializable GetSerializableClone()
+        {
+            return new GraphSerializable() { adjacencyList = this.adjacencyList, n = this.n};
+        }
+
+        public void LoadSerializableClone(GraphSerializable gr)
+        {
+            adjacencyList = gr.adjacencyList;
+            n = gr.n;
         }
     }
 }
