@@ -133,9 +133,11 @@ namespace Lab02
                 {
                     Vertex v1 = previouslySelectedEllipse.DataContext as Vertex;
                     Vertex v2 = el.DataContext as Vertex;
-                    previouslySelectedEllipse.Stroke = Brushes.Black;
                     previouslySelectedEllipse.Style = el_template;
                     previouslySelectedEllipse = null;
+
+                    if (v1 == v2)
+                        return;
 
                     if (!uses_graph.IsLinked(v1, v2))
                         uses_graph.AddLink(v1, v2);

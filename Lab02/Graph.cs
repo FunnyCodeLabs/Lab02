@@ -79,6 +79,8 @@ namespace Lab02
 
         public void AddLink(Vertex v1, Vertex v2)
         {
+            if (v1 == v2)
+                return;
             List<Vertex> v1Adjacent = GetAdjacent(v1);
             List<Vertex> v2Adjacent = GetAdjacent(v2);
 
@@ -115,8 +117,17 @@ namespace Lab02
 
         public void DeleteLink(Vertex v1, Vertex v2)
         {
-            GetAdjacent(v1).Remove(v2);
-            GetAdjacent(v2).Remove(v1);
+            if (v1 == v2)
+                return;
+            List<Vertex> v1Adjacent = GetAdjacent(v1);
+            List<Vertex> v2Adjacent = GetAdjacent(v2);
+
+            if (v1Adjacent == null || v2Adjacent == null)
+                return;
+            
+            v1Adjacent.Remove(v2);
+            v2Adjacent.Remove(v1);
+
             OnGraphChanged();
         }
 
