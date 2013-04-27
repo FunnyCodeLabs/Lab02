@@ -28,6 +28,7 @@ namespace Lab02
     {
         private Style el_template;
         private Style l_template;
+        private Style el_selected;
         private Graph uses_graph;
         private Random random = new Random();
         private Ellipse curOverEllipse
@@ -58,6 +59,7 @@ namespace Lab02
             InitializeComponent();
             el_template = FindResource("Ellipse_Template") as Style;
             l_template = FindResource("Line_Style") as Style;
+            el_selected = FindResource("SelectedEllipseStyle") as Style;
             UsesGraph(new Graph());
             RedrawUsesGraph(uses_graph);
             previouslySelectedEllipse = null;
@@ -125,11 +127,14 @@ namespace Lab02
                 if (previouslySelectedEllipse == null)
                 {
                     previouslySelectedEllipse = el;
+                    previouslySelectedEllipse.Style = el_selected;
                 }
                 else
                 {
                     Vertex v1 = previouslySelectedEllipse.DataContext as Vertex;
                     Vertex v2 = el.DataContext as Vertex;
+                    previouslySelectedEllipse.Stroke = Brushes.Black;
+                    previouslySelectedEllipse.Style = el_template;
                     previouslySelectedEllipse = null;
 
                     if (!uses_graph.IsLinked(v1, v2))
