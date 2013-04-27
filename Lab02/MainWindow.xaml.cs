@@ -190,6 +190,11 @@ namespace Lab02
             RedrawUsesGraph(uses_graph);
         }
 
+        private void ClearGraph_Click(object sender, RoutedEventArgs e)
+        {
+            uses_graph.Clear();
+        }
+
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             //SettingsWindow should be opened

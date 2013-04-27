@@ -80,37 +80,42 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <ToolBar Grid.Row="0">
-            <Button Margin="0 0 4 0" ToolTip="New graph" Click="NewGraph_Click">
-                <Image Source="Icons/add.png" Style="{StaticResource ImageForButtonStyle}"/>
-            </Button>
-            
-            <Button Margin="0 0 4 0" ToolTip="Open" Click="OpenFromFile_Click">
-                <Image Source="Icons/open.png" Style="{StaticResource ImageForButtonStyle}"/>
-            </Button>
-            
-            <Button Margin="0 0 4 0" ToolTip="Save" Click="SaveToFile_Click">
-                <Image Source="Icons/save.png" Style="{StaticResource ImageForButtonStyle}"/>
-            </Button>
-            
-            <Separator/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <ToolBarTray Grid.Column="1" Orientation="Vertical">
+            <ToolBar>
+                <Button Margin="0 0 4 0" ToolTip="New graph" Click="NewGraph_Click">
+                    <Image Source="Icons/add.png" Style="{StaticResource ImageForButtonStyle}"/>
+                </Button>
 
-            <Button Margin="4 0 4 0" ToolTip="Settings" Click="Settings_Click">
-                <Image Source="Icons/settings.png" Style="{StaticResource ImageForButtonStyle}"/>
-            </Button>
-            
-            <Button Margin="0 0 4 0" ToolTip="Information" Click="GetInfo_Click">
-                <Image Source="Icons/info.png" Style="{StaticResource ImageForButtonStyle}"/>
-            </Button>
+                <Button Margin="0 0 4 0" ToolTip="Clear graph" Click="ClearGraph_Click">
+                    <Image Source="Icons/remove.png" Style="{StaticResource ImageForButtonStyle}"/>
+                </Button>
 
-        </ToolBar>
-        <Canvas Grid.Row="1" Name="cl_VasaField"
-                Background="White">
-        </Canvas>
+                <Button Margin="0 0 4 0" ToolTip="Open" Click="OpenFromFile_Click">
+                    <Image Source="Icons/open.png" Style="{StaticResource ImageForButtonStyle}"/>
+                </Button>
+
+                <Button Margin="0 0 4 0" ToolTip="Save" Click="SaveToFile_Click">
+                    <Image Source="Icons/save.png" Style="{StaticResource ImageForButtonStyle}"/>
+                </Button>
+
+                <Separator/>
+
+                <Button Margin="4 0 4 0" ToolTip="Settings" Click="Settings_Click">
+                    <Image Source="Icons/settings.png" Style="{StaticResource ImageForButtonStyle}"/>
+                </Button>
+
+                <Button Margin="0 0 4 0" ToolTip="Information" Click="GetInfo_Click">
+                    <Image Source="Icons/info.png" Style="{StaticResource ImageForButtonStyle}"/>
+                </Button>
+
+            </ToolBar>
+        </ToolBarTray>
+        <Canvas Grid.Column="0" Name="cl_VasaField"
+                Background="White"/>
     </Grid>
     
 </Window>

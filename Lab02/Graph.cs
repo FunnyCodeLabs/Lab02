@@ -39,11 +39,7 @@ namespace Lab02
             }
         }
 
-        public bool ChangesSaved
-        {
-            get;
-            set;
-        }
+        public bool ChangesSaved { get; set; }
 
         public Graph()
         {
@@ -57,6 +53,12 @@ namespace Lab02
             LoadSerializableClone(gr);
 
             ChangesSaved = true;
+        }
+
+        public void Clear()
+        {
+            adjacencyList.Clear();
+            OnGraphChanged();
         }
 
         private List<Vertex> GetAdjacent(Vertex v)

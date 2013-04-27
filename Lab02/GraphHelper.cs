@@ -14,7 +14,14 @@ namespace Lab02
     public class GraphHelper
     {
         #region Constants
-            private const string DEFAULT_GRAPH_FILE_EXTENSION = "Graph files (*.gr)|*.gr";
+
+        private static readonly string DEFAULT_FILENAME = "graph";
+        private static readonly string DEFAULT_EXTENSION = ".gr";
+        private static readonly string DEFAULT_FILEFILTER = "Graph files (*.gr)|*" + DEFAULT_EXTENSION;
+        private static readonly string DEFAULT_DIRECTORY = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        private static readonly string OPENDIALOG_TITLE = "Open existing graph";
+        private static readonly string SAVEDIALOG_TITLE = "Save graph";
+
         #endregion
 
         public static void SerializeGraph(Graph graph, string path_to_file)
@@ -39,8 +46,9 @@ namespace Lab02
         {
             OpenFileDialog openDialog = new OpenFileDialog();
             openDialog.Multiselect = false;
-            openDialog.Filter = DEFAULT_GRAPH_FILE_EXTENSION;
-            openDialog.Title = "Open existing graph";
+            openDialog.InitialDirectory = DEFAULT_DIRECTORY;
+            openDialog.Filter = DEFAULT_FILEFILTER;
+            openDialog.Title = OPENDIALOG_TITLE;
 
             var result = openDialog.ShowDialog(owner);
             if (result.Value)
@@ -58,12 +66,13 @@ namespace Lab02
             SaveFileDialog saveDialog = new SaveFileDialog();
 
             saveDialog.OverwritePrompt = true;
-            saveDialog.DefaultExt = DEFAULT_GRAPH_FILE_EXTENSION;
+            saveDialog.FileName = DEFAULT_FILENAME;
+            saveDialog.DefaultExt = DEFAULT_EXTENSION;
             saveDialog.AddExtension = true;
             saveDialog.CheckPathExists = true;
-            saveDialog.CreatePrompt = true;
-            saveDialog.Filter = DEFAULT_GRAPH_FILE_EXTENSION;
-            saveDialog.Title = "Save graph";
+            saveDialog.InitialDirectory = DEFAULT_DIRECTORY;
+            saveDialog.Filter = DEFAULT_FILEFILTER;
+            saveDialog.Title = SAVEDIALOG_TITLE;
 
             var result = saveDialog.ShowDialog();
             if (result.Value)
