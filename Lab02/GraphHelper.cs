@@ -89,5 +89,23 @@ namespace Lab02
 
             return result;
         }
+
+        /// <summary>
+        /// Asks "Do you want to save question" if graph is unsaved. Returns true if next operation is allowed 
+        /// </summary>
+        public static bool CheckIfUnsaved(Window owner, Graph graph)
+        {
+            if (!graph.ChangesSaved)
+            {
+                var result = DoYouWantToSaveQuestion(owner);
+
+                if (result == MessageBoxResult.Yes)
+                    SaveGraphToFile(owner, graph);
+                else if (result == MessageBoxResult.Cancel)
+                    return false;
+            }
+
+            return true;
+        }
     }
 }

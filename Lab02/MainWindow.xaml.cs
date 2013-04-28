@@ -178,15 +178,8 @@ namespace Lab02
         #region Toolbar buttons
         private void NewGraph_Click(object sender, RoutedEventArgs e)
         {
-            if (!uses_graph.ChangesSaved)
-            {
-                var result = GraphHelper.DoYouWantToSaveQuestion(this);
-
-                if (result == MessageBoxResult.Yes)
-                    GraphHelper.SaveGraphToFile(this, uses_graph);
-                else if (result == MessageBoxResult.Cancel)
-                    return;
-            }
+            if (!GraphHelper.CheckIfUnsaved(this, uses_graph))
+                return;
 
             UsesGraph(new Graph());
             RedrawUsesGraph(uses_graph);
@@ -194,6 +187,9 @@ namespace Lab02
 
         private void ClearGraph_Click(object sender, RoutedEventArgs e)
         {
+            if (!GraphHelper.CheckIfUnsaved(this, uses_graph))
+                return;
+
             uses_graph.Clear();
         }
 
@@ -207,15 +203,8 @@ namespace Lab02
             Graph openedGraph = GraphHelper.OpenGraphFromFile(this);
             if (openedGraph != null)
             {
-                if (!uses_graph.ChangesSaved)
-                {
-                    var result = GraphHelper.DoYouWantToSaveQuestion(this);
-                    
-                    if (result == MessageBoxResult.Yes)
-                        GraphHelper.SaveGraphToFile(this, uses_graph);
-                    else if (result == MessageBoxResult.Cancel)
-                        return;
-                }
+                if (!GraphHelper.CheckIfUnsaved(this, uses_graph))
+                    return;
 
                 UsesGraph(openedGraph);
                 RedrawUsesGraph(uses_graph);
