@@ -29,6 +29,7 @@ namespace Lab02
         private Style el_template;
         private Style l_template;
         private Style el_selected;
+        private Style l_selected;
         private Graph uses_graph;
         private Random random = new Random();
         private Ellipse curOverEllipse
@@ -49,9 +50,12 @@ namespace Lab02
                 return ellipse;
             }
         }
-        private Ellipse previouslySelectedEllipse;
+        private Ellipse previouslySelectedEllipse = null;
 
-        private bool isDraggingEnabled;
+        private List<Tuple<Vertex, Vertex>> selectedLines = new List<Tuple<Vertex,Vertex>>();
+        private List<Vertex> selectedVertexes = new List<Vertex>();
+
+        private bool isDraggingEnabled = true;
         public bool IsDraggingEnabled { get { return isDraggingEnabled; } set { isDraggingEnabled = value; NotifyPropertyChanged(); } }
 
         public MainWindow()
@@ -60,10 +64,9 @@ namespace Lab02
             el_template = FindResource("Ellipse_Template") as Style;
             l_template = FindResource("Line_Style") as Style;
             el_selected = FindResource("SelectedEllipseStyle") as Style;
+            l_selected = FindResource("SelectedLineStyle") as Style;
             UsesGraph(new Graph());
             RedrawUsesGraph(uses_graph);
-            previouslySelectedEllipse = null;
-            IsDraggingEnabled = true;
             this.DataContext = this;
         }
 
@@ -84,6 +87,8 @@ namespace Lab02
         void RedrawUsesGraph(Graph gr)
         {
             cl_VasaField.Children.Clear();
+            BridgeSearch br = new BridgeSearch(uses_graph);
+            selectedLines = br.FindBridges();
             foreach (var v in gr.Vertexes)
             {
                 AddVertexToCanvas(v);
@@ -113,7 +118,10 @@ namespace Lab02
             Line l = new Line();
             Tuple<Vertex, Vertex> pair = new Tuple<Vertex, Vertex>(v1, v2);
             l.DataContext = pair;
-            l.Style = l_template;
+            if (!selectedLines.Contains(pair))
+                l.Style = l_template;
+            else
+                l.Style = l_selected;
             cl_VasaField.Children.Add(l);
         }
 
@@ -218,8 +226,9 @@ namespace Lab02
         
         private void GetInfo_Click(object sender, RoutedEventArgs e)
         {
-            //GraphInfoWindow should be opened
+
         }
+
         #endregion
 
         #endregion
