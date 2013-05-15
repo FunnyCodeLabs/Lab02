@@ -28,6 +28,7 @@ namespace Lab02
     {
         private Style el_template;
         private Style l_template;
+        private Style el_mouse_over;
         private Style el_selected;
         private Style l_selected;
         private Graph uses_graph;
@@ -54,7 +55,7 @@ namespace Lab02
 
         private List<Tuple<Vertex, Vertex>> selectedLines = new List<Tuple<Vertex,Vertex>>();
         private List<Vertex> selectedVertexes = new List<Vertex>();
-
+       
         private bool isDraggingEnabled = true;
         public bool IsDraggingEnabled { get { return isDraggingEnabled; } set { isDraggingEnabled = value; NotifyPropertyChanged(); } }
 
@@ -63,32 +64,28 @@ namespace Lab02
             InitializeComponent();
             el_template = FindResource("Ellipse_Template") as Style;
             l_template = FindResource("Line_Style") as Style;
+            el_mouse_over = FindResource("MouseOverEllipseStyle") as Style;
             el_selected = FindResource("SelectedEllipseStyle") as Style;
             l_selected = FindResource("SelectedLineStyle") as Style;
-            UsesGraph(new Graph());
+            UsesGraphInit(new Graph());
             RedrawUsesGraph(uses_graph);
             this.DataContext = this;
         }
 
-        void UsesGraph(Graph newGraph)
+        void UsesGraphInit(Graph newGraph)
         {
             uses_graph = newGraph;
-            //Vertex v1 = uses_graph.AddVertex();
-            //Vertex v2 = uses_graph.AddVertex();
-            //Vertex v3 = uses_graph.AddVertex();
-            //Vertex v4 = uses_graph.AddVertex();
-            //uses_graph.AddLink(v1, v2);
-            //uses_graph.AddLink(v2, v3);
-            //uses_graph.AddLink(v3, v4);
-            //uses_graph.AddLink(v4, v1);
             uses_graph.GraphChanged += RedrawUsesGraph;
         }
 
         void RedrawUsesGraph(Graph gr)
         {
             cl_VasaField.Children.Clear();
-            BridgeSearch br = new BridgeSearch(uses_graph);
-            selectedLines = br.FindBridges();
+
+            ISelectorAlgorithm algorithm = new BiconnectedComponentsSearch(uses_graph);
+            selectedLines = algorithm.SelectLines();
+            selectedVertexes = algorithm.SelectVertexes();
+
             foreach (var v in gr.Vertexes)
             {
                 AddVertexToCanvas(v);
@@ -108,7 +105,12 @@ namespace Lab02
             }
             Ellipse el = new Ellipse();
             el.DataContext = v;
-            el.Style = el_template;
+            
+            if (!selectedVertexes.Contains(v))
+                el.Style = el_template;
+            else
+                el.Style = el_selected;
+
             el.MouseDown += el_MouseDown;
             cl_VasaField.Children.Add(el);
         }
@@ -135,7 +137,7 @@ namespace Lab02
                 if (previouslySelectedEllipse == null)
                 {
                     previouslySelectedEllipse = el;
-                    previouslySelectedEllipse.Style = el_selected;
+                    previouslySelectedEllipse.Style = el_mouse_over;
                 }
                 else
                 {
@@ -189,7 +191,7 @@ namespace Lab02
             if (!GraphHelper.CheckIfUnsaved(this, uses_graph))
                 return;
 
-            UsesGraph(new Graph());
+            UsesGraphInit(new Graph());
             RedrawUsesGraph(uses_graph);
         }
 
@@ -214,7 +216,7 @@ namespace Lab02
                 if (!GraphHelper.CheckIfUnsaved(this, uses_graph))
                     return;
 
-                UsesGraph(openedGraph);
+                UsesGraphInit(openedGraph);
                 RedrawUsesGraph(uses_graph);
             }
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab02
 {
-    class BridgeSearch
+    class BridgeSearch : ISelectorAlgorithm
     {
         Graph graph;
         List<int>[] g;
@@ -58,13 +58,25 @@ namespace Lab02
             }
         }
 
-        public List<Tuple<Vertex, Vertex>> FindBridges()
+        private List<Tuple<Vertex, Vertex>> FindBridges()
         {
             timer = 0;
             for (int i = 0; i < g.Length; ++i)
                 if (!used[i])
                     dfs(i);
             return bridges;
+        }
+
+        public List<Tuple<Vertex, Vertex>> SelectLines()
+        {
+            return FindBridges();
+        }
+
+
+        private List<Vertex> emptyVertexList = new List<Vertex>();
+        public List<Vertex> SelectVertexes()
+        {
+            return emptyVertexList;
         }
     }
 }

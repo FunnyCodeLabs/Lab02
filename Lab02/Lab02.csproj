@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BiconnectedComponentsSearch.cs" />
     <Compile Include="BridgeSearch.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphHelper.cs" />
@@ -68,6 +69,7 @@
     </Compile>
     <Compile Include="GraphSerializable.cs" />
     <Compile Include="Converters\TopLeftToCenterConverter.cs" />
+    <Compile Include="ISelectorAlgorithm.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
