@@ -15,29 +15,6 @@ namespace Lab02
         int timer;
         int[] tin, fup;
 
-        
-
-        public BiconnectedComponentsSearch(Graph gr)
-        {
-            graph = gr;
-
-            used = new bool[graph.Vertexes.Count];
-
-            tin = new int[graph.Vertexes.Count];
-            fup = new int[graph.Vertexes.Count];
-
-            graphRepresentation = new List<List<int>>();
-            int i = 0;
-            foreach (var v in graph.Vertexes)
-            {
-                graphRepresentation.Add(new List<int>());
-            }
-            foreach (var pair in graph.Links)
-            {
-                graphRepresentation[graph.Vertexes.IndexOf(pair.Item1)].Add(graph.Vertexes.IndexOf(pair.Item2));
-            }
-        }
-
         void DFS(int v, int p = -1)
         {
 	        used[v] = true;
@@ -98,5 +75,31 @@ namespace Lab02
             return emptyLinesList;
         }
 
+
+        public void Initialize(Graph gr)
+        {
+            graph = gr;
+
+            used = new bool[graph.Vertexes.Count];
+
+            tin = new int[graph.Vertexes.Count];
+            fup = new int[graph.Vertexes.Count];
+
+            graphRepresentation = new List<List<int>>();
+            int i = 0;
+            foreach (var v in graph.Vertexes)
+            {
+                graphRepresentation.Add(new List<int>());
+            }
+            foreach (var pair in graph.Links)
+            {
+                graphRepresentation[graph.Vertexes.IndexOf(pair.Item1)].Add(graph.Vertexes.IndexOf(pair.Item2));
+            }
+        }
+        
+        public override string ToString()
+        {
+            return "Biconnected components search";
+        }
     }
 }

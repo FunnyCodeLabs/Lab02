@@ -8,6 +8,7 @@ namespace Lab02
 {
     public interface ISelectorAlgorithm
     {
+        void Initialize(Graph gr);
         List<Tuple<Vertex, Vertex>> SelectLines();
         List<Vertex> SelectVertexes();
     }

@@ -62,6 +62,7 @@
     </ApplicationDefinition>
     <Compile Include="BiconnectedComponentsSearch.cs" />
     <Compile Include="BridgeSearch.cs" />
+    <Compile Include="NonBridgeSearch.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphHelper.cs" />
     <Compile Include="GraphInfoWindow.xaml.cs">

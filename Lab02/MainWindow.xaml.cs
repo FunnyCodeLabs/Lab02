@@ -59,17 +59,36 @@ namespace Lab02
         private bool isDraggingEnabled = true;
         public bool IsDraggingEnabled { get { return isDraggingEnabled; } set { isDraggingEnabled = value; NotifyPropertyChanged(); } }
 
+
+        private List<ISelectorAlgorithm> algorithms = new List<ISelectorAlgorithm>();
+        public List<ISelectorAlgorithm> Algorithms
+        {
+            get { return algorithms; }
+        }
+        private ISelectorAlgorithm curAlogirthm;
+        public ISelectorAlgorithm CurAlogirthm
+        {
+            get { return curAlogirthm; }
+            set { curAlogirthm = value; RedrawUsesGraph(uses_graph); }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
             el_template = FindResource("Ellipse_Template") as Style;
             l_template = FindResource("Line_Style") as Style;
             el_mouse_over = FindResource("MouseOverEllipseStyle") as Style;
             el_selected = FindResource("SelectedEllipseStyle") as Style;
             l_selected = FindResource("SelectedLineStyle") as Style;
             UsesGraphInit(new Graph());
+
+            algorithms.Add(new BridgeSearch());
+            algorithms.Add(new NonBridgeSearch());
+            algorithms.Add(new BiconnectedComponentsSearch());
+            curAlogirthm = algorithms.FirstOrDefault();
+
             RedrawUsesGraph(uses_graph);
-            this.DataContext = this;
         }
 
         void UsesGraphInit(Graph newGraph)
@@ -82,9 +101,9 @@ namespace Lab02
         {
             cl_VasaField.Children.Clear();
 
-            ISelectorAlgorithm algorithm = new BiconnectedComponentsSearch(uses_graph);
-            selectedLines = algorithm.SelectLines();
-            selectedVertexes = algorithm.SelectVertexes();
+            curAlogirthm.Initialize(uses_graph);
+            selectedLines = curAlogirthm.SelectLines();
+            selectedVertexes = curAlogirthm.SelectVertexes();
 
             foreach (var v in gr.Vertexes)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab02
 {
-    class BridgeSearch : ISelectorAlgorithm
+    class NonBridgeSearch : ISelectorAlgorithm
     {
         Graph graph;
         List<int>[] g;
@@ -30,7 +30,7 @@ namespace Lab02
                 {
                     dfs(to, v);
                     fup[v] = Math.Min(fup[v], fup[to]);
-                    if (fup[to] > tin[v])
+                    if (!(fup[to] > tin[v]))
                     {
                         bridges.Add(new Tuple<Vertex, Vertex>(graph.Vertexes[v], graph.Vertexes[to]));
                     }
@@ -81,7 +81,7 @@ namespace Lab02
 
         public override string ToString()
         {
-            return "Bridge search";
+            return "Non bridge search";
         }
     }
 }
