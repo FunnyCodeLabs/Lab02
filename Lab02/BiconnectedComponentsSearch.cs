@@ -9,7 +9,7 @@ namespace Lab02
     public class BiconnectedComponentsSearch : ISelectorAlgorithm
     {
         private Graph graph;
-        private List<Vertex> biconnectedComponents = new List<Vertex>();
+        private List<Vertex> biconnectedComponents;
         private List<List<int>> graphRepresentation;
         bool[] used;
         int timer;
@@ -78,6 +78,7 @@ namespace Lab02
 
         public void Initialize(Graph gr)
         {
+            biconnectedComponents = new List<Vertex>();
             graph = gr;
 
             used = new bool[graph.Vertexes.Count];

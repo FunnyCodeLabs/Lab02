@@ -14,7 +14,7 @@ namespace Lab02
         int timer;
         int[] tin, fup;
 
-        private List<Tuple<Vertex, Vertex>> bridges = new List<Tuple<Vertex,Vertex>>();
+        private List<Tuple<Vertex, Vertex>> bridges;
 
         void dfs(int v, int p = -1)
         {
@@ -61,6 +61,7 @@ namespace Lab02
 
         public void Initialize(Graph gr)
         {
+            bridges = new List<Tuple<Vertex,Vertex>>();
             graph = gr;
 
             used = new bool[gr.Vertexes.Count];
