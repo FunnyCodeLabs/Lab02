@@ -7,6 +7,8 @@ using System.Windows;
 
 namespace Lab02
 {
+
+
     [Serializable]
     public class Vertex
     {
@@ -21,8 +23,8 @@ namespace Lab02
                 if (!HasCoords)
                     throw new ArgumentException("Coords are not initialized! (x)");
                 return x;
-            } 
-            set { x = value; HasCoords = true; } 
+            }
+            set { x = value; HasCoords = true; OnCoordsChanged(); } 
         }
 
         public int Y 
@@ -32,8 +34,8 @@ namespace Lab02
                 if (!HasCoords)
                     throw new ArgumentException("Coords are not initialized! (y)");
                 return y; 
-            } 
-            set { y = value; HasCoords = true; } 
+            }
+            set { y = value; HasCoords = true; OnCoordsChanged(); } 
         }
 
         public Vertex(Point? coords = null)
@@ -46,5 +48,17 @@ namespace Lab02
             else
                 HasCoords = false;
         }
+
+
+        public delegate void CoordsChangedEventHandler();
+
+        public event CoordsChangedEventHandler CoordsChanged;
+
+        private void OnCoordsChanged()
+        {
+            if (CoordsChanged != null)
+                CoordsChanged();
+        }
+
     }
 }

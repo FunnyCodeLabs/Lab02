@@ -69,8 +69,8 @@ namespace Lab02
             return FindBiconnectedComponents();
         }
 
-        private List<Tuple<Vertex, Vertex>> emptyLinesList = new List<Tuple<Vertex, Vertex>>();
-        public List<Tuple<Vertex, Vertex>> SelectLines()
+        private List<Link> emptyLinesList = new List<Link>();
+        public List<Link> SelectLines()
         {
             return emptyLinesList;
         }
@@ -87,7 +87,7 @@ namespace Lab02
             fup = new int[graph.Vertexes.Count];
 
             graphRepresentation = new List<List<int>>();
-            int i = 0;
+
             foreach (var v in graph.Vertexes)
             {
                 graphRepresentation.Add(new List<int>());

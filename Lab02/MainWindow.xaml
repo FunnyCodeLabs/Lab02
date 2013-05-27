@@ -74,6 +74,7 @@
             <Setter Property="X1" Value="{Binding Item1.X}"/>
             <Setter Property="Y1" Value="{Binding Item1.Y}"/>
             <Setter Property="X2" Value="{Binding Item2.X}"/>
+            <Setter Property="ToolTip" Value="{Binding Length, UpdateSourceTrigger=PropertyChanged}"/>
             <Setter Property="Y2" Value="{Binding Item2.Y}"/>
             <Setter Property="Panel.ZIndex" Value="{StaticResource LowZIndex}"/>
         </Style>

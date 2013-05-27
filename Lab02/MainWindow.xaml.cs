@@ -53,7 +53,7 @@ namespace Lab02
         }
         private Ellipse previouslySelectedEllipse = null;
 
-        private List<Tuple<Vertex, Vertex>> selectedLines = new List<Tuple<Vertex,Vertex>>();
+        private List<Link> selectedLines = new List<Link>();
         private List<Vertex> selectedVertexes = new List<Vertex>();
        
         private bool isDraggingEnabled = true;
@@ -137,7 +137,7 @@ namespace Lab02
         void AddLinkToCanvas(Vertex v1, Vertex v2)
         {
             Line l = new Line();
-            Tuple<Vertex, Vertex> pair = new Tuple<Vertex, Vertex>(v1, v2);
+            Link pair = new Link(v1, v2);
             l.DataContext = pair;
             if (!selectedLines.Contains(pair))
                 l.Style = l_template;

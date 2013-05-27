@@ -23,16 +23,16 @@ namespace Lab02
             }
         }
 
-        public List<Tuple<Vertex, Vertex>> Links
+        public List<Link> Links
         {
             get
             {
-                List<Tuple<Vertex, Vertex>> links = new List<Tuple<Vertex, Vertex>>();
+                List<Link> links = new List<Link>();
                 foreach (var list in adjacencyList)
                 {
                     for (int i = 1; i < list.Count; i++)
                     {
-                        links.Add(new Tuple<Vertex,Vertex>(list[0], list[i]));
+                        links.Add(new Link(list[0], list[i]));
                     }
                 }
                 return links;

@@ -14,7 +14,7 @@ namespace Lab02
         int timer;
         int[] tin, fup;
 
-        private List<Tuple<Vertex, Vertex>> bridges;
+        private List<Link> bridges;
 
         void dfs(int v, int p = -1)
         {
@@ -32,13 +32,13 @@ namespace Lab02
                     fup[v] = Math.Min(fup[v], fup[to]);
                     if (fup[to] > tin[v])
                     {
-                        bridges.Add(new Tuple<Vertex, Vertex>(graph.Vertexes[v], graph.Vertexes[to]));
+                        bridges.Add(new Link(graph.Vertexes[v], graph.Vertexes[to]));
                     }
                 }
             }
         }
 
-        private List<Tuple<Vertex, Vertex>> FindBridges()
+        private List<Link> FindBridges()
         {
             timer = 0;
             for (int i = 0; i < g.Length; ++i)
@@ -47,7 +47,7 @@ namespace Lab02
             return bridges;
         }
 
-        public List<Tuple<Vertex, Vertex>> SelectLines()
+        public List<Link> SelectLines()
         {
             return FindBridges();
         }
@@ -61,7 +61,7 @@ namespace Lab02
 
         public void Initialize(Graph gr)
         {
-            bridges = new List<Tuple<Vertex,Vertex>>();
+            bridges = new List<Link>();
             graph = gr;
 
             used = new bool[gr.Vertexes.Count];
