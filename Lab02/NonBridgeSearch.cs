@@ -30,7 +30,7 @@ namespace Lab02
                 {
                     dfs(to, v);
                     fup[v] = Math.Min(fup[v], fup[to]);
-                    if (!(fup[to] > tin[v]))
+                    if(!(fup[to] > tin[v]))
                     {
                         nonBridges.Add(new Link(graph.Vertexes[v], graph.Vertexes[to]));
                     }
@@ -38,7 +38,7 @@ namespace Lab02
             }
         }
 
-        private List<Link> FindBridges()
+        private List<Link> FindNonBridges()
         {
             timer = 0;
             for (int i = 0; i < g.Length; ++i)
@@ -49,7 +49,7 @@ namespace Lab02
 
         public List<Link> SelectLines()
         {
-            return FindBridges();
+            return FindNonBridges();
         }
 
 
