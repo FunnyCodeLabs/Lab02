@@ -32,6 +32,7 @@ namespace Lab02
                 formatter.Serialize(stream, graph.GetSerializableClone());
             }
         }
+
         public static Graph DeSerializeGraph(string path_to_file)
         {
             using (Stream stream = File.Open(path_to_file, FileMode.Open))

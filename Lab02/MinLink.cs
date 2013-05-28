@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab02
 {
-    class BridgeSearch : ISelectorAlgorithm
+    class MinLineCovering: ISelectorAlgorithm
     {
         Graph graph;
         List<int>[] g;
@@ -14,7 +14,7 @@ namespace Lab02
         int timer;
         int[] tin, fup;
 
-        private List<Link> bridges;
+        private List<Link> nonBridges;
 
         void dfs(int v, int p = -1)
         {
@@ -30,10 +30,7 @@ namespace Lab02
                 {
                     dfs(to, v);
                     fup[v] = Math.Min(fup[v], fup[to]);
-                    if (fup[to] > tin[v])
-                    {
-                        bridges.Add(new Link(graph.Vertexes[v], graph.Vertexes[to]));
-                    }
+                    nonBridges.Add(new Link(graph.Vertexes[v], graph.Vertexes[to]));
                 }
             }
         }
@@ -44,7 +41,7 @@ namespace Lab02
             for (int i = 0; i < g.Length; ++i)
                 if (!used[i])
                     dfs(i);
-            return bridges;
+            return nonBridges;
         }
 
         public List<Link> SelectLines()
@@ -61,7 +58,7 @@ namespace Lab02
 
         public void Initialize(Graph gr)
         {
-            bridges = new List<Link>();
+            nonBridges = new List<Link>();
             graph = gr;
 
             used = new bool[gr.Vertexes.Count];
@@ -82,7 +79,7 @@ namespace Lab02
 
         public override string ToString()
         {
-            return "Bridge search";
+            return "Minimum line covering";
         }
     }
 }

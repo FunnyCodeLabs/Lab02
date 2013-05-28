@@ -86,6 +86,7 @@ namespace Lab02
             algorithms.Add(new BridgeSearch());
             algorithms.Add(new NonBridgeSearch());
             algorithms.Add(new BiconnectedComponentsSearch());
+            algorithms.Add(new MinLineCovering());
             curAlogirthm = algorithms.FirstOrDefault();
 
             RedrawUsesGraph(uses_graph);

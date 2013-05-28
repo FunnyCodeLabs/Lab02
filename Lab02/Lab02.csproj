@@ -63,6 +63,7 @@
     <Compile Include="BiconnectedComponentsSearch.cs" />
     <Compile Include="BridgeSearch.cs" />
     <Compile Include="Link.cs" />
+    <Compile Include="MinLink.cs" />
     <Compile Include="NonBridgeSearch.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphHelper.cs" />
