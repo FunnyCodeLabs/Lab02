@@ -9,42 +9,14 @@ namespace Lab02
     class NonBridgeSearch : ISelectorAlgorithm
     {
         Graph graph;
-        List<int>[] g;
-        bool[] used;
-        int timer;
-        int[] tin, fup;
+        BridgeSearch bridges = new BridgeSearch();
 
         private List<Link> nonBridges;
 
-        void dfs(int v, int p = -1)
-        {
-            used[v] = true;
-            tin[v] = fup[v] = timer++;
-            for (int i = 0; i < g[v].Count; ++i)
-            {
-                int to = g[v][i];
-                if (to == p) continue;
-                if (used[to])
-                    fup[v] = Math.Min(fup[v], tin[to]);
-                else
-                {
-                    dfs(to, v);
-                    fup[v] = Math.Min(fup[v], fup[to]);
-                    if(!(fup[to] > tin[v]))
-                    {
-                        nonBridges.Add(new Link(graph.Vertexes[v], graph.Vertexes[to]));
-                    }
-                }
-            }
-        }
-
         private List<Link> FindNonBridges()
         {
-            timer = 0;
-            for (int i = 0; i < g.Length; ++i)
-                if (!used[i])
-                    dfs(i);
-            return nonBridges;
+            List<Link> b = bridges.SelectLines();
+            return graph.Links.Except(b).ToList();
         }
 
         public List<Link> SelectLines()
@@ -61,23 +33,8 @@ namespace Lab02
 
         public void Initialize(Graph gr)
         {
-            nonBridges = new List<Link>();
             graph = gr;
-
-            used = new bool[gr.Vertexes.Count];
-            tin = new int[gr.Vertexes.Count];
-            fup = new int[gr.Vertexes.Count];
-
-            g = new List<int>[gr.Vertexes.Count];
-            int i = 0;
-            foreach (var v in graph.Vertexes)
-            {
-                g[i++] = new List<int>();
-            }
-            foreach (var pair in graph.Links)
-            {
-                g[graph.Vertexes.IndexOf(pair.Item1)].Add(graph.Vertexes.IndexOf(pair.Item2));
-            }
+            bridges.Initialize(gr);
         }
 
         public override string ToString()

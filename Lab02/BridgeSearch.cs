@@ -44,6 +44,9 @@ namespace Lab02
             for (int i = 0; i < g.Length; ++i)
                 if (!used[i])
                     dfs(i);
+
+            for (int i = 0, n = bridges.Count; i < n; i++)
+                bridges.Add(new Link(bridges[i].Item2, bridges[i].Item1));
             return bridges;
         }
 

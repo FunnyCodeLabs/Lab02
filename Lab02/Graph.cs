@@ -158,5 +158,6 @@ namespace Lab02
         {
             return new GraphSerializable() { adjacencyList = this.adjacencyList, n = this.n};
         }
+
     }
 }

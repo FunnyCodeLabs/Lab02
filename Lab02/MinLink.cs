@@ -14,7 +14,7 @@ namespace Lab02
         int timer;
         int[] tin, fup;
 
-        private List<Link> nonBridges;
+        private List<Link> minLinkList;
 
         void dfs(int v, int p = -1)
         {
@@ -30,23 +30,30 @@ namespace Lab02
                 {
                     dfs(to, v);
                     fup[v] = Math.Min(fup[v], fup[to]);
-                    nonBridges.Add(new Link(graph.Vertexes[v], graph.Vertexes[to]));
+                    minLinkList.Add(new Link(graph.Vertexes[v], graph.Vertexes[to]));
                 }
             }
         }
 
-        private List<Link> FindBridges()
+        private List<Link> FindMinLinks()
         {
             timer = 0;
             for (int i = 0; i < g.Length; ++i)
                 if (!used[i])
                     dfs(i);
-            return nonBridges;
+
+            for (int i = 0, n = minLinkList.Count; i < n; i++)
+            {
+                Link l = new Link(minLinkList[i].Item2, minLinkList[i].Item1); 
+                    if(!minLinkList.Contains(l))
+                        minLinkList.Add(l);
+            }
+            return minLinkList;
         }
 
         public List<Link> SelectLines()
         {
-            return FindBridges();
+            return FindMinLinks();
         }
 
         private List<Vertex> emptyVertexList = new List<Vertex>();
@@ -58,7 +65,7 @@ namespace Lab02
 
         public void Initialize(Graph gr)
         {
-            nonBridges = new List<Link>();
+            minLinkList = new List<Link>();
             graph = gr;
 
             used = new bool[gr.Vertexes.Count];

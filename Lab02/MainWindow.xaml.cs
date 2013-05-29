@@ -101,7 +101,6 @@ namespace Lab02
         void RedrawUsesGraph(Graph gr)
         {
             cl_VasaField.Children.Clear();
-
             curAlogirthm.Initialize(uses_graph);
             selectedLines = curAlogirthm.SelectLines();
             selectedVertexes = curAlogirthm.SelectVertexes();
