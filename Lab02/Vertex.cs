@@ -52,6 +52,7 @@ namespace Lab02
 
         public delegate void CoordsChangedEventHandler();
 
+        [field: NonSerialized]
         public event CoordsChangedEventHandler CoordsChanged;
 
         private void OnCoordsChanged()

@@ -29,7 +29,7 @@ namespace Lab02
             using (Stream stream = File.Open(path_to_file, FileMode.OpenOrCreate))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, graph.GetSerializableClone());
+                formatter.Serialize(stream, graph);
             }
         }
 
@@ -38,8 +38,8 @@ namespace Lab02
             using (Stream stream = File.Open(path_to_file, FileMode.Open))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                GraphSerializable gr = (GraphSerializable)formatter.Deserialize(stream);
-                return new Graph(gr);
+                Graph gr = (Graph)formatter.Deserialize(stream);
+                return gr;
             }
         }
 

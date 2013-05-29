@@ -9,6 +9,7 @@ using System.Windows;
 
 namespace Lab02
 {
+    [Serializable]
     public class Graph
     {
         private List<List<Vertex>> adjacencyList;
@@ -138,6 +139,7 @@ namespace Lab02
 
         public delegate void GraphChangedEventHandler(Graph sender);
 
+        [field: NonSerialized]
         public event GraphChangedEventHandler GraphChanged;
 
         private void OnGraphChanged()
