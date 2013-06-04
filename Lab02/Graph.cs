@@ -49,13 +49,6 @@ namespace Lab02
             ChangesSaved = true;
         }
 
-        public Graph(GraphSerializable gr)
-        {
-            LoadSerializableClone(gr);
-
-            ChangesSaved = true;
-        }
-
         public void Clear()
         {
             adjacencyList.Clear();
@@ -149,17 +142,5 @@ namespace Lab02
             if (GraphChanged != null)
                 GraphChanged(this);
         }
-
-        private void LoadSerializableClone(GraphSerializable gr)
-        {
-            adjacencyList = gr.adjacencyList;
-            n = gr.n;
-        }
-
-        public GraphSerializable GetSerializableClone()
-        {
-            return new GraphSerializable() { adjacencyList = this.adjacencyList, n = this.n};
-        }
-
     }
 }

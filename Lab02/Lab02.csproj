@@ -70,7 +70,6 @@
     <Compile Include="GraphInfoWindow.xaml.cs">
       <DependentUpon>GraphInfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GraphSerializable.cs" />
     <Compile Include="Converters\TopLeftToCenterConverter.cs" />
     <Compile Include="ISelectorAlgorithm.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
